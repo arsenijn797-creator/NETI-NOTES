@@ -35,16 +35,17 @@
       Наши конспекты — это ясно и структурно.
     </h1>
     <div class="search-bar">
-      <div class="search-item">
-        <span class="icon">🔍</span>
-        <input type="text" placeholder="Факультет">
-      </div>
+         <div class="search-item">
+             <span class="icon">🔍</span>
+                <input id="facultyInput" type="text" placeholder="Факультет">
+        </div>
 
-      <div class="search-item">
-        <span class="icon">🎓</span>
-        <input type="text" placeholder="Дисциплина и преподаватель">
-      </div>
-      <button class="search-btn">Искать</button>
+        <div class="search-item">
+            <span class="icon">🎓</span>
+                <input id="subjectInput" type="text" placeholder="Дисциплина и преподаватель">
+        </div>
+
+        <button id="searchBtn" class="search-btn">Искать</button>
     </div>
   </div>
   <div class="hero-image">
@@ -136,5 +137,56 @@
             </div>
         </section>
     </main>
+<script>
+window.onload = function () {
+
+    const facultyInput = document.getElementById('facultyInput');
+    const subjectInput = document.getElementById('subjectInput');
+    const searchBtn = document.getElementById('searchBtn');
+
+    const routes = [
+        { faculty: ["автф"], subjects: [], url: "AVTF.html" },
+        { faculty: ["фла"], subjects: [], url: "FLA.html" },
+        { faculty: ["мтф"], subjects: [], url: "MTF.html" },
+        { faculty: ["фма"], subjects: [], url: "FMA.html" },
+        { faculty: ["фпми"], subjects: [], url: "FPMI.html" },
+        { faculty: ["рэф"], subjects: [], url: "REF.html" },
+        { faculty: ["фтф"], subjects: [], url: "FTF.html" },
+        { faculty: ["фэн"], subjects: [], url: "FEN.html" },
+        { faculty: ["фб"], subjects: [], url: "FB.html" },
+        { faculty: ["фго"], subjects: [], url: "FGO.html" },
+        { faculty: ["ист"], subjects: [], url: "IST.html" }
+    ];
+
+    function search() {
+        const facultyValue = facultyInput.value.toLowerCase().trim();
+        const subjectValue = subjectInput.value.toLowerCase().trim();
+
+        for (let route of routes) {
+
+            const facultyMatch = route.faculty.some(f => facultyValue.includes(f));
+
+            if (!facultyMatch) continue;
+
+            if (subjectValue === "") {
+                window.location.href = route.url;
+                return;
+            }
+
+            const subjectMatch = route.subjects.some(s => subjectValue.includes(s));
+
+            if (subjectMatch) {
+                window.location.href = route.url;
+                return;
+            } else {
+                alert("Нет такого предмета");
+                return;
+            }
+        }
+        alert("Факультет не найден");
+    }
+    searchBtn.onclick = search;
+};
+</script>
 </body>
 </html>
